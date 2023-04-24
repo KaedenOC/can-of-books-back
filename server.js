@@ -12,6 +12,14 @@ const PORT = process.env.PORT || 3002;
 
 mongoose.connect(process.env.DATABASE_URL);
 
+// HELPFUL TO TROUBLESHOOT IN TERMINAL AS TO WHY YOU CANT CONNECT TO MONGODB
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log('Mongoose is connected');
+});
+
 app.get('/books', async (request, response) => {
 
   response.send('test request received');
