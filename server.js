@@ -41,29 +41,24 @@ app.post('/books', async (request, response, next) => {
     next(error);
   }
 
-
-  // try {
-  //   const { title, description, status } = request.body;
-
-  //   // Check if any required properties are missing from the request body
-  //   if (!title || !description || !status) {
-  //     return response.status(400).json({ error: 'Missing required properties' });
-  //   }
-
-  //   const newBook = new Book({
-  //     title: title,
-  //     description: description,
-  //     status: status
-  //   });
-  //   const savedBook = await newBook.save();
-  //   response.status(201).json(savedBook);
-  // } catch (error) {
-  //   // If there's an error saving the book to the database, return a 500 Internal Server Error status code
-  //   response.status(500).json({ error: error.message });
-  //   next(error);
-  // }
 });
 
-app.listen(PORT, () => console.log(`listening on ${PORT}`));
+app.delete('/books/:bookID', deleteBook);
 
-//hello please push
+async function deleteBook(request, response, next) {
+  try {
+
+    let id = request.params.bookID;
+
+    await Book.findByIdAndDelete(id);
+
+    console.log(request.params);
+
+    response.status(200).send('book deleted');
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+app.listen(PORT, () => console.log(`listening on ${PORT}`));
