@@ -43,22 +43,27 @@ app.post('/books', async (request, response, next) => {
 
 });
 
-app.delete('/books/:bookID', deleteBook);
-
-async function deleteBook(request, response, next) {
+app.delete('/books/:bookID', async (request, response, next) => {
   try {
-
     let id = request.params.bookID;
-
     await Book.findByIdAndDelete(id);
-
     console.log(request.params);
-
     response.status(200).send('book deleted');
-
   } catch (error) {
     next(error);
   }
-}
+});
+
+app.put('/book/:id', async (request, response, next) => {
+  try {
+    const bookId = request.params.id;
+    const updatedBook = await Book.findByIdAndUpdate(bookId, request.body, {
+      new: true,
+    });
+    response.status(200).send(updatedBook);
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
