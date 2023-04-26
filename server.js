@@ -54,9 +54,9 @@ app.delete('/books/:bookID', async (request, response, next) => {
   }
 });
 
-app.put('/book/:id', async (request, response, next) => {
+app.put('/books/:bookID', async (request, response, next) => {
   try {
-    const bookId = request.params.id;
+    const bookId = request.params.bookID;
     const updatedBook = await Book.findByIdAndUpdate(bookId, request.body, {
       new: true,
     });
