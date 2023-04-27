@@ -55,6 +55,7 @@ app.delete('/books/:bookID', async (request, response, next) => {
 });
 
 app.put('/books/:bookID', async (request, response, next) => {
+  console.log('this is request', request.body);
   try {
     const bookId = request.params.bookID;
     const updatedBook = await Book.findByIdAndUpdate(bookId, request.body, {
